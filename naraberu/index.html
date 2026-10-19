@@ -1,15 +1,938 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ならべる｜画像レイアウト</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header><a class="brand" href="index.html"><span class="logo brand-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span>ならべる<span class="brand-sub">IMAGE STUDIO</span></a><button id="mobileMenuButton" type="button" aria-label="使い方・設定のメニューを開く" aria-haspopup="dialog" aria-controls="mobileMenuDialog" aria-expanded="false"><span aria-hidden="true">☰</span></button></header>
-<main>
-<div class="workspace"><aside aria-labelledby="settingsTitle"><h2 id="settingsTitle" class="settings-heading">設定</h2><details class="settings-group"><summary>画像全体</summary><div class="group-body"><details class="setting-item"><summary>保存画像サイズ</summary><div class="setting-content"><div class="field">保存画像のサイズ<span class="size-hint">縦横それぞれ最大2560px・見出しと画像も自動で拡大縮小</span></div><label class="field">SNS<select id="sizePlatform"><option value="all">すべて</option><option value="Instagram">Instagram</option><option value="X">X</option><option value="Facebook">Facebook</option></select></label><label class="field">用途・投稿方法<select id="sizePreset"><option value="custom">カスタム（手動で設定）</option></select></label><p class="hint">通常投稿・ストーリーズ・表紙・プロフィール・広告の静止画を作成できます。選択したサイズをそのまま設定します。上限は各サイズの最大値（2560px）です。</p><p id="sizePresetNote" class="hint" role="status"></p><a id="sizePresetSource" class="size-preset-source" target="_blank" rel="noopener noreferrer" hidden>選択したサイズの参考情報</a><div class="size-fields"><label>幅（px）<input id="outputWidth" type="number" min="1" max="2560" step="1" value="1200"></label><span>×</span><label>高さ（px）<input id="outputHeight" type="number" min="1" max="2560" step="1" value="1200"></label></div><label class="toggle-row size-lock"><span>縦横を同じ長さにする</span><input id="squareLock" type="checkbox" checked></label><p id="sizeNotice" class="hint" role="status"></p></div></details><details class="setting-item"><summary>背景色・背景画像</summary><div class="setting-content"><div class="field">背景色<div class="tabs"><button id="colorTab" class="active">カラー</button><button id="imageTab">画像</button></div></div><div id="colorPanel" class="colors"><button data-color="#f4efe7" style="--swatch:#f4efe7" class="selected" aria-label="アイボリー"></button><button data-color="#ffffff" style="--swatch:#ffffff" aria-label="白"></button><button data-color="#e5eada" style="--swatch:#e5eada" aria-label="セージ"></button><button data-color="#e3eaf3" style="--swatch:#e3eaf3" aria-label="ブルー"></button><button data-color="#f2dfe1" style="--swatch:#f2dfe1" aria-label="ピンク"></button><input id="color" type="color" value="#f4efe7" aria-label="カスタム背景色"></div><div id="imagePanel" hidden><label id="bgDrop" class="background-upload" tabindex="0">＋ 背景画像をアップロード<span>クリックして選択、またはここにドロップ</span><input id="bgFile" type="file" accept="image/*" hidden></label><div id="bgDetails" hidden><img id="bgThumb" alt="選択した背景画像"><span id="bgName"></span><button id="bgRemove" type="button">削除</button></div><p class="hint">背景画像は16枚の上限に含まれません。</p></div></div></details><details class="setting-item"><summary>透過率</summary><div class="setting-content"><label class="range-field">透過率 <output id="bgTransparencyValue">0%</output><input id="bgTransparency" type="range" min="0" max="100" value="0"><span>画像全体の背景に適用・0%：不透明 ／ 100%：透明</span></label></div></details></div></details><details class="settings-group" id="headingSettings"><summary>見出し</summary><div class="group-body"><details class="setting-item"><summary>本文</summary><div class="setting-content"><details class="setting-item"><summary>文字サイズ</summary><div class="setting-content"><label class="range-field">文字サイズ（px）<input id="titleFontSize" type="number" min="0.01" max="1200" step="0.01" value="48"><input id="titleFontSizeRange" type="range" min="0.01" max="1200" step="0.01" value="48"></label></div></details><details class="setting-item"><summary>フォント</summary><div class="setting-content"><label class="field">フォント<select id="titleFontFamily"><option value="Arial, Meiryo, sans-serif" selected>ゴシック</option><option value="&quot;Yu Mincho&quot;, &quot;MS PMincho&quot;, serif">明朝</option><option value="Consolas, &quot;MS Gothic&quot;, monospace">等幅</option></select></label></div></details><details class="setting-item"><summary>位置</summary><div class="setting-content"><label class="range-field">位置 <output id="titleTextPositionValue">50%</output><input id="titleTextPosition" type="range" min="0" max="100" step="0.1" value="50"><span>左端 ← → 右端</span></label></div></details></div></details><details class="setting-item"><summary>画像</summary><div class="setting-content"><details class="setting-item"><summary>見出し画像をつける</summary><div class="setting-content"><label class="toggle-row"><span>見出し画像をつける</span><input id="titleImageEnabled" type="checkbox" checked></label><fieldset id="titleImageSizeControls" class="size-controls"><label class="range-field">見出しの画像サイズ（px）<input id="titleImageSize" type="number" min="0.01" max="1200" step="0.01" value="80"><input id="titleImageSizeRange" type="range" min="0.01" max="1200" step="0.01" value="80"></label></fieldset></div></details><details class="setting-item" id="titleImagePositionControls"><summary>位置</summary><div class="setting-content"><label class="range-field">位置 <output id="titleImagePositionValue">0%</output><input id="titleImagePosition" type="range" min="0" max="100" step="0.1" value="0"><span>本文との間隔を20px以上に保ちます。</span></label></div></details></div></details><details class="setting-item"><summary>背景</summary><div class="setting-content"><details class="setting-item"><summary>見出し全体</summary><div class="setting-content"><label class="toggle-row"><span>背景色をつける</span><input id="titleBgEnabled" type="checkbox"></label><fieldset id="titleBgColorControls" class="color-controls" aria-label="見出し全体の背景色"><div class="colors"><button type="button" data-heading-color="#f4efe7" style="--swatch:#f4efe7" aria-label="見出し全体の背景色：アイボリー" aria-pressed="false"></button><button type="button" data-heading-color="#ffffff" style="--swatch:#ffffff" class="selected" aria-label="見出し全体の背景色：白" aria-pressed="true"></button><button type="button" data-heading-color="#e5eada" style="--swatch:#e5eada" aria-label="見出し全体の背景色：セージ" aria-pressed="false"></button><button type="button" data-heading-color="#e3eaf3" style="--swatch:#e3eaf3" aria-label="見出し全体の背景色：ブルー" aria-pressed="false"></button><button type="button" data-heading-color="#f2dfe1" style="--swatch:#f2dfe1" aria-label="見出し全体の背景色：ピンク" aria-pressed="false"></button><input id="titleBgColor" type="color" value="#ffffff" aria-label="見出し全体の背景色を自由に選択"></div></fieldset></div></details><details class="setting-item"><summary>本文</summary><div class="setting-content"><label class="toggle-row"><span>背景色をつける</span><input id="titleTextBgEnabled" type="checkbox" checked></label><fieldset id="titleTextBgColorControls" class="color-controls" aria-label="本文の背景色"><div class="colors"><button type="button" data-heading-text-color="#f4efe7" style="--swatch:#f4efe7" aria-label="本文の背景色：アイボリー" aria-pressed="false"></button><button type="button" data-heading-text-color="#ffffff" style="--swatch:#ffffff" class="selected" aria-label="本文の背景色：白" aria-pressed="true"></button><button type="button" data-heading-text-color="#e5eada" style="--swatch:#e5eada" aria-label="本文の背景色：セージ" aria-pressed="false"></button><button type="button" data-heading-text-color="#e3eaf3" style="--swatch:#e3eaf3" aria-label="本文の背景色：ブルー" aria-pressed="false"></button><button type="button" data-heading-text-color="#f2dfe1" style="--swatch:#f2dfe1" aria-label="本文の背景色：ピンク" aria-pressed="false"></button><input id="titleTextBgColor" type="color" value="#ffffff" aria-label="本文の背景色を自由に選択"></div></fieldset></div></details></div></details></div></details><details class="settings-group"><summary>画像単体</summary><div class="group-body"><details class="setting-item"><summary>タイトル</summary><div class="setting-content"><label class="toggle-row"><span>タイトルをつける</span><input id="tileTitleEnabled" type="checkbox" checked></label><div id="tileTitleControls"><details class="setting-item"><summary>文字色</summary><div class="setting-content"><div class="colors"><button type="button" data-tile-title-color="#f4efe7" style="--swatch:#f4efe7" aria-label="タイトル文字色：アイボリー" aria-pressed="false"></button><button type="button" data-tile-title-color="#ffffff" style="--swatch:#ffffff" aria-label="タイトル文字色：白" aria-pressed="false"></button><button type="button" data-tile-title-color="#e5eada" style="--swatch:#e5eada" aria-label="タイトル文字色：セージ" aria-pressed="false"></button><button type="button" data-tile-title-color="#e3eaf3" style="--swatch:#e3eaf3" aria-label="タイトル文字色：ブルー" aria-pressed="false"></button><button type="button" data-tile-title-color="#f2dfe1" style="--swatch:#f2dfe1" aria-label="タイトル文字色：ピンク" aria-pressed="false"></button><input id="tileTitleColor" type="color" value="#29372f" aria-label="タイトル文字色を自由に選択"></div></div></details><details class="setting-item"><summary>位置</summary><div class="setting-content"><label class="field">タイトルの位置<select id="tileTitlePosition"><option value="top">画像の上</option><option value="bottom" selected>画像の下</option></select></label></div></details></div></div></details><details class="setting-item"><summary>背景</summary><div class="setting-content"><label class="toggle-row"><span>背景をつける</span><input id="tileBgEnabled" type="checkbox"></label><div id="tileBackgroundControls" hidden><details class="setting-item"><summary>背景色</summary><div class="setting-content"><div class="colors"><button type="button" data-tile-color="#f4efe7" style="--swatch:#f4efe7" aria-label="画像単体の背景色：アイボリー" aria-pressed="false"></button><button type="button" data-tile-color="#ffffff" style="--swatch:#ffffff" class="selected" aria-label="画像単体の背景色：白" aria-pressed="true"></button><button type="button" data-tile-color="#e5eada" style="--swatch:#e5eada" aria-label="画像単体の背景色：セージ" aria-pressed="false"></button><button type="button" data-tile-color="#e3eaf3" style="--swatch:#e3eaf3" aria-label="画像単体の背景色：ブルー" aria-pressed="false"></button><button type="button" data-tile-color="#f2dfe1" style="--swatch:#f2dfe1" aria-label="画像単体の背景色：ピンク" aria-pressed="false"></button><input id="tileBgColor" type="color" value="#ffffff" aria-label="画像単体の背景色を自由に選択"></div></div></details><details class="setting-item"><summary>枠線の種類</summary><div class="setting-content"><label class="field">枠線の種類<select id="tileBorderStyle"><option value="none">なし</option><option value="solid" selected>実線</option><option value="dashed">破線</option><option value="dotted">点線</option><option value="double">二重線</option></select></label></div></details><details class="setting-item"><summary>枠線の色</summary><div class="setting-content"><div class="colors"><button type="button" data-tile-border-color="#f4efe7" style="--swatch:#f4efe7" aria-label="枠線の色：アイボリー" aria-pressed="false"></button><button type="button" data-tile-border-color="#ffffff" style="--swatch:#ffffff" class="selected" aria-label="枠線の色：白" aria-pressed="true"></button><button type="button" data-tile-border-color="#e5eada" style="--swatch:#e5eada" aria-label="枠線の色：セージ" aria-pressed="false"></button><button type="button" data-tile-border-color="#e3eaf3" style="--swatch:#e3eaf3" aria-label="枠線の色：ブルー" aria-pressed="false"></button><button type="button" data-tile-border-color="#f2dfe1" style="--swatch:#f2dfe1" aria-label="枠線の色：ピンク" aria-pressed="false"></button><input id="tileBorderColor" type="color" value="#ffffff" aria-label="枠線の色を自由に選択"></div></div></details></div></div></details><details class="setting-item"><summary>透過率</summary><div class="setting-content"><label class="range-field">透過率 <output id="imageTransparencyValue">0%</output><input id="imageTransparency" type="range" min="0" max="100" value="0"><span>各写真に一括適用・0%：不透明 ／ 100%：透明</span></label></div></details><input id="border" type="checkbox" checked hidden><input id="frameTransparency" type="hidden" value="15"><output id="frameTransparencyValue" hidden></output></div></details></aside>
-<div id="rightPane" class="right-pane"><section class="usage-guide" aria-labelledby="usageTitle"><h3 id="usageTitle">使い方</h3><ol><li>画像全体・見出し・添付画像の見た目は、設定項目で調整します。スマホでは右上のメニューから設定を開けます。</li><li>プレビュー画面の背景をクリック（タップ）すると、背景画像をアップロード・設定できます。</li><li>添付画像のアップロード後、表示される候補からレイアウトを選べます。1・4・9・16枚は自動配置です。</li><li>画像をドラッグして別の画像に重ねると、位置を入れ替えられます。</li><li>画像をクリック（タップ）すると削除の確認画面が開き、「削除する」で削除できます。</li><li>「プレビュー」を押すと、ダウンロード前に完成画像を確認できます。</li><li>「PNGをダウンロード」「JPEGをダウンロード」で画像を保存できます。</li></ol></section><article id="previewDrop" class="preview-area"><div class="preview-top"><h2 class="preview-heading">プレビュー</h2><span id="layoutLabel"></span></div><input id="files" type="file" accept="image/*" multiple hidden><div id="notice" role="alert"></div><span id="orderStatus" class="visually-hidden" role="status" aria-live="polite"></span><div id="previewStage"><nav id="previewSettingsRail" aria-label="画像の設定"><div class="preview-setting-shortcut overall-shortcut"><button id="overallSettingsButton" type="button" aria-label="画像全体の設定を開く">＋</button><span>画像全体設定</span></div><div class="preview-setting-shortcut"><button id="headingSettingsButton" type="button" aria-label="見出しの設定を開く">＋</button><span>見出し設定</span></div><div class="preview-setting-shortcut"><button id="photoSettingsButton" type="button" aria-label="画像単体の設定を開く">＋</button><span>画像単体設定</span></div><div class="preview-setting-shortcut add-image-shortcut"><button id="mobileAddImageButton" type="button" aria-label="画像を追加する">＋</button><span>画像追加</span></div></nav><div id="square"><div id="backgroundLayer" aria-hidden="true"></div><div id="canvasTitle"><span id="titleMeasure" aria-hidden="true"></span><div id="headingImageControls" class="heading-image-controls" hidden><button id="headingImageDrop" type="button" aria-label="見出し画像を追加または変更"><img id="titleIcon" alt="見出しの画像" hidden><span id="titleImagePlaceholder">＋</span></button><button id="titleImageRemove" class="heading-image-remove" type="button" aria-label="見出し画像を削除" hidden>×</button><input id="titleImageFile" type="file" accept="image/*" hidden></div><span id="titleText" contenteditable="plaintext-only" role="textbox" aria-label="全体の見出し" data-placeholder="全体の見出しを入力"></span><input id="title" type="hidden" value=""></div><div id="photoArea"><div id="empty" role="button" tabindex="0" aria-label="画像を選択"><div class="empty-grid"><i></i><i></i><i></i><i></i></div><h3>ここに画像をドロップ</h3><p>クリック（タップ）して画像を選択できます。<br>追加した画像は自動でレイアウトされます。</p></div><div id="grid" hidden></div></div></div></div><div id="photoActions" class="canvas-actions" hidden><button id="photoDropPrompt" type="button" hidden>ここに画像をドロップ・クリックして選択</button></div><div id="layoutChoices" hidden><span class="layout-choice-label">レイアウトを選択</span><div id="layoutChoiceButtons"></div></div><div class="preview-bottom"><div class="download-buttons"><button id="outputPreviewButton" type="button" disabled>プレビュー</button><button id="downloadPng" disabled>↓ PNGをダウンロード</button><button id="downloadJpeg" disabled>↓ JPEGをダウンロード</button></div></div></article></div></div></main><footer id="appCopyright"><nav class="footer-info-links" aria-label="サイト情報"><button type="button" data-info="privacy">プライバシーポリシー</button><button type="button" data-info="terms">利用規約</button><button type="button" data-info="version">バージョン情報</button></nav><div>©Roll Eight Works</div></footer><dialog id="deleteDialog" aria-labelledby="deleteTitle" aria-describedby="deleteName"><h2 id="deleteTitle">この画像を削除しますか？</h2><img id="deletePreview" alt="削除対象の画像"><p id="deleteName"></p><div class="dialog-buttons"><button id="deleteCancel" type="button" autofocus>キャンセル</button><button id="deleteConfirm" type="button">削除する</button></div></dialog><dialog id="cropDialog" aria-labelledby="cropTitle"><h2 id="cropTitle">背景画像を設定する</h2><p id="cropEmpty">背景画像を選択してください。</p><button id="cropUpload" class="background-upload-zone" type="button"><span class="background-upload-icon" aria-hidden="true">＋</span><strong>ここに背景画像をドロップ</strong><span>クリック（タップ）して画像を選択できます。</span></button><p id="cropUploadNotice" role="status"></p><div id="cropEditor" hidden><p>画像をドラッグして位置を調整できます。</p><canvas id="cropCanvas" tabindex="0" role="img" aria-label="切り抜きプレビュー。ドラッグまたは矢印キーで位置を調整"></canvas><label class="range-field">拡大率 <output id="cropZoomValue">100%</output><input id="cropZoom" type="range" min="1" max="4" step="0.01" value="1"></label><button id="cropReset" type="button">位置と拡大率をリセット</button></div><div class="dialog-buttons"><button id="backgroundDeleteButton" type="button" hidden>背景画像を削除する</button><button id="cropCancel" type="button">キャンセル</button><button id="cropApply" type="button" disabled>背景画像を設定する</button></div></dialog><dialog id="outputPreviewDialog" aria-labelledby="outputPreviewTitle"><h2 id="outputPreviewTitle">作成画像のプレビュー</h2><p id="outputPreviewSize"></p><div class="output-preview-image-area"><img id="outputPreviewImage" alt="実際に保存される画像のプレビュー"></div><p id="outputPreviewNotice" role="status"></p><div class="output-preview-footer"><button id="outputPreviewPng" type="button">PNGをダウンロード</button><button id="outputPreviewJpeg" type="button">JPEGをダウンロード</button><button id="outputPreviewClose" type="button">閉じる</button></div></dialog><dialog id="mobileMenuDialog" aria-labelledby="mobileMenuTitle"><div class="mobile-menu-header"><h2 id="mobileMenuTitle">メニュー</h2><button id="mobileMenuClose" type="button" aria-label="メニューを閉じる">×</button></div><nav class="mobile-menu-nav" aria-label="メニュー内の移動"><button id="mobileUsageLink" type="button">使い方</button><button type="button" data-info="privacy">プライバシーポリシー</button><button type="button" data-info="terms">利用規約</button><button type="button" data-info="version">バージョン情報</button></nav><button id="mobileMenuBack" type="button" hidden>← メニューに戻る</button><div id="mobileMenuContent" hidden></div></dialog><dialog id="mobileSettingsDialog" aria-labelledby="mobileSettingsTitle"><div class="mobile-menu-header"><h2 id="mobileSettingsTitle">画像設定</h2><button id="mobileSettingsClose" type="button" aria-label="画像設定を閉じる">×</button></div><div id="mobileSettingsContent"></div><div class="settings-modal-footer"><button id="mobileSettingsOk" type="button">OK</button></div></dialog><dialog id="backgroundDeleteDialog" aria-labelledby="backgroundDeleteTitle"><h2 id="backgroundDeleteTitle">背景画像を削除します。よろしいですか？</h2><div class="dialog-buttons"><button id="backgroundDeleteCancel" type="button" autofocus>キャンセル</button><button id="backgroundDeleteConfirm" type="button">削除する</button></div></dialog><dialog id="siteInfoDialog" aria-labelledby="siteInfoTitle"><div class="mobile-menu-header"><h2 id="siteInfoTitle"></h2><button id="siteInfoClose" type="button" aria-label="閉じる">×</button></div><div id="siteInfoBody"><div id="versionInfo" hidden><p>ver.0.1</p><p>©Roll Eight Works</p></div><div id="legalInfo" hidden><p class="legal-frame-note">外部ページを表示しています。表示されない場合は<a id="legalExternalLink" target="_blank" rel="noopener noreferrer">別タブで開く</a>をご利用ください。</p><iframe id="legalFrame" title="外部ページ" referrerpolicy="no-referrer"></iframe></div></div><div class="settings-modal-footer"><button id="siteInfoOk" type="button">OK</button></div></dialog><script src="js/script.js"></script></body></html>
-
-
-
-
-
-
-
-
-
-
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ならべる｜画像レイアウト</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="index.html"
+        ><span class="logo brand-grid" aria-hidden="true"
+          ><i></i><i></i><i></i><i></i></span
+        >ならべる<span class="brand-sub">IMAGE STUDIO</span></a
+      ><button
+        id="mobileMenuButton"
+        type="button"
+        aria-label="使い方・設定のメニューを開く"
+        aria-haspopup="dialog"
+        aria-controls="mobileMenuDialog"
+        aria-expanded="false"
+      >
+        <span aria-hidden="true">☰</span>
+      </button>
+    </header>
+    <main>
+      <div class="workspace">
+        <aside aria-labelledby="settingsTitle">
+          <h2 id="settingsTitle" class="settings-heading">設定</h2>
+          <details class="settings-group">
+            <summary>画像全体</summary>
+            <div class="group-body">
+              <details class="setting-item">
+                <summary>保存画像サイズ</summary>
+                <div class="setting-content">
+                  <div class="field">
+                    保存画像のサイズ<span class="size-hint"
+                      >縦横それぞれ最大2560px・見出しと画像も自動で拡大縮小</span
+                    >
+                  </div>
+                  <label class="field"
+                    >SNS<select id="sizePlatform">
+                      <option value="all">すべて</option>
+                      <option value="Instagram">Instagram</option>
+                      <option value="X">X</option>
+                      <option value="Facebook">Facebook</option>
+                    </select></label
+                  ><label class="field"
+                    >用途・投稿方法<select id="sizePreset">
+                      <option value="custom">カスタム（手動で設定）</option>
+                    </select></label
+                  >
+                  <p class="hint">
+                    通常投稿・ストーリーズ・表紙・プロフィール・広告の静止画を作成できます。選択したサイズをそのまま設定します。上限は各サイズの最大値（2560px）です。
+                  </p>
+                  <p id="sizePresetNote" class="hint" role="status"></p>
+                  <a
+                    id="sizePresetSource"
+                    class="size-preset-source"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    hidden
+                    >選択したサイズの参考情報</a
+                  >
+                  <div class="size-fields">
+                    <label
+                      >幅（px）<input
+                        id="outputWidth"
+                        type="number"
+                        min="1"
+                        max="2560"
+                        step="1"
+                        value="1200" /></label
+                    ><span>×</span
+                    ><label
+                      >高さ（px）<input
+                        id="outputHeight"
+                        type="number"
+                        min="1"
+                        max="2560"
+                        step="1"
+                        value="1200"
+                    /></label>
+                  </div>
+                  <label class="toggle-row size-lock"
+                    ><span>縦横を同じ長さにする</span
+                    ><input id="squareLock" type="checkbox" checked
+                  /></label>
+                  <p id="sizeNotice" class="hint" role="status"></p>
+                </div>
+              </details>
+              <details class="setting-item">
+                <summary>背景色・背景画像</summary>
+                <div class="setting-content">
+                  <div class="field">
+                    背景色
+                    <div class="tabs">
+                      <button id="colorTab" class="active">カラー</button
+                      ><button id="imageTab">画像</button>
+                    </div>
+                  </div>
+                  <div id="colorPanel" class="colors">
+                    <button
+                      data-color="#f4efe7"
+                      style="--swatch: #f4efe7"
+                      class="selected"
+                      aria-label="アイボリー"
+                    ></button
+                    ><button
+                      data-color="#ffffff"
+                      style="--swatch: #ffffff"
+                      aria-label="白"
+                    ></button
+                    ><button
+                      data-color="#e5eada"
+                      style="--swatch: #e5eada"
+                      aria-label="セージ"
+                    ></button
+                    ><button
+                      data-color="#e3eaf3"
+                      style="--swatch: #e3eaf3"
+                      aria-label="ブルー"
+                    ></button
+                    ><button
+                      data-color="#f2dfe1"
+                      style="--swatch: #f2dfe1"
+                      aria-label="ピンク"
+                    ></button
+                    ><input
+                      id="color"
+                      type="color"
+                      value="#f4efe7"
+                      aria-label="カスタム背景色"
+                    />
+                  </div>
+                  <div id="imagePanel" hidden>
+                    <label id="bgDrop" class="background-upload" tabindex="0"
+                      >＋ 背景画像をアップロード<span
+                        >クリックして選択、またはここにドロップ</span
+                      ><input id="bgFile" type="file" accept="image/*" hidden
+                    /></label>
+                    <div id="bgDetails" hidden>
+                      <img id="bgThumb" alt="選択した背景画像" /><span
+                        id="bgName"
+                      ></span
+                      ><button id="bgRemove" type="button">削除</button>
+                    </div>
+                    <p class="hint">背景画像は16枚の上限に含まれません。</p>
+                  </div>
+                </div>
+              </details>
+              <details class="setting-item">
+                <summary>透過率</summary>
+                <div class="setting-content">
+                  <label class="range-field"
+                    >透過率 <output id="bgTransparencyValue">0%</output
+                    ><input
+                      id="bgTransparency"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="0"
+                    /><span
+                      >画像全体の背景に適用・0%：不透明 ／ 100%：透明</span
+                    ></label
+                  >
+                </div>
+              </details>
+            </div>
+          </details>
+          <details class="settings-group" id="headingSettings">
+            <summary>見出し</summary>
+            <div class="group-body">
+              <details class="setting-item">
+                <summary>本文</summary>
+                <div class="setting-content">
+                  <details class="setting-item">
+                    <summary>文字サイズ</summary>
+                    <div class="setting-content">
+                      <label class="range-field"
+                        >文字サイズ（px）<input
+                          id="titleFontSize"
+                          type="number"
+                          min="0.01"
+                          max="1200"
+                          step="0.01"
+                          value="48" /><input
+                          id="titleFontSizeRange"
+                          type="range"
+                          min="0.01"
+                          max="1200"
+                          step="0.01"
+                          value="48"
+                      /></label>
+                    </div>
+                  </details>
+                  <details class="setting-item">
+                    <summary>フォント</summary>
+                    <div class="setting-content">
+                      <label class="field"
+                        >フォント<select id="titleFontFamily">
+                          <option value="Arial, Meiryo, sans-serif" selected>
+                            ゴシック
+                          </option>
+                          <option value='"Yu Mincho", "MS PMincho", serif'>
+                            明朝
+                          </option>
+                          <option value='Consolas, "MS Gothic", monospace'>
+                            等幅
+                          </option>
+                        </select></label
+                      >
+                    </div>
+                  </details>
+                  <details class="setting-item">
+                    <summary>位置</summary>
+                    <div class="setting-content">
+                      <label class="range-field"
+                        >位置 <output id="titleTextPositionValue">50%</output
+                        ><input
+                          id="titleTextPosition"
+                          type="range"
+                          min="0"
+                          max="100"
+                          step="0.1"
+                          value="50"
+                        /><span>左端 ← → 右端</span></label
+                      >
+                    </div>
+                  </details>
+                </div>
+              </details>
+              <details class="setting-item">
+                <summary>画像</summary>
+                <div class="setting-content">
+                  <details class="setting-item">
+                    <summary>見出し画像をつける</summary>
+                    <div class="setting-content">
+                      <label class="toggle-row"
+                        ><span>見出し画像をつける</span
+                        ><input id="titleImageEnabled" type="checkbox" checked
+                      /></label>
+                      <fieldset
+                        id="titleImageSizeControls"
+                        class="size-controls"
+                      >
+                        <label class="range-field"
+                          >見出しの画像サイズ（px）<input
+                            id="titleImageSize"
+                            type="number"
+                            min="0.01"
+                            max="1200"
+                            step="0.01"
+                            value="80" /><input
+                            id="titleImageSizeRange"
+                            type="range"
+                            min="0.01"
+                            max="1200"
+                            step="0.01"
+                            value="80"
+                        /></label>
+                      </fieldset>
+                    </div>
+                  </details>
+                  <details class="setting-item" id="titleImagePositionControls">
+                    <summary>位置</summary>
+                    <div class="setting-content">
+                      <label class="range-field"
+                        >位置 <output id="titleImagePositionValue">0%</output
+                        ><input
+                          id="titleImagePosition"
+                          type="range"
+                          min="0"
+                          max="100"
+                          step="0.1"
+                          value="0"
+                        /><span>本文との間隔を20px以上に保ちます。</span></label
+                      >
+                    </div>
+                  </details>
+                </div>
+              </details>
+              <details class="setting-item">
+                <summary>背景</summary>
+                <div class="setting-content">
+                  <details class="setting-item">
+                    <summary>見出し全体</summary>
+                    <div class="setting-content">
+                      <label class="toggle-row"
+                        ><span>背景色をつける</span
+                        ><input id="titleBgEnabled" type="checkbox"
+                      /></label>
+                      <fieldset
+                        id="titleBgColorControls"
+                        class="color-controls"
+                        aria-label="見出し全体の背景色"
+                      >
+                        <div class="colors">
+                          <button
+                            type="button"
+                            data-heading-color="#f4efe7"
+                            style="--swatch: #f4efe7"
+                            aria-label="見出し全体の背景色：アイボリー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-color="#ffffff"
+                            style="--swatch: #ffffff"
+                            class="selected"
+                            aria-label="見出し全体の背景色：白"
+                            aria-pressed="true"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-color="#e5eada"
+                            style="--swatch: #e5eada"
+                            aria-label="見出し全体の背景色：セージ"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-color="#e3eaf3"
+                            style="--swatch: #e3eaf3"
+                            aria-label="見出し全体の背景色：ブルー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-color="#f2dfe1"
+                            style="--swatch: #f2dfe1"
+                            aria-label="見出し全体の背景色：ピンク"
+                            aria-pressed="false"
+                          ></button
+                          ><input
+                            id="titleBgColor"
+                            type="color"
+                            value="#ffffff"
+                            aria-label="見出し全体の背景色を自由に選択"
+                          />
+                        </div>
+                      </fieldset>
+                    </div>
+                  </details>
+                  <details class="setting-item">
+                    <summary>本文</summary>
+                    <div class="setting-content">
+                      <label class="toggle-row"
+                        ><span>背景色をつける</span
+                        ><input id="titleTextBgEnabled" type="checkbox" checked
+                      /></label>
+                      <fieldset
+                        id="titleTextBgColorControls"
+                        class="color-controls"
+                        aria-label="本文の背景色"
+                      >
+                        <div class="colors">
+                          <button
+                            type="button"
+                            data-heading-text-color="#f4efe7"
+                            style="--swatch: #f4efe7"
+                            aria-label="本文の背景色：アイボリー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-text-color="#ffffff"
+                            style="--swatch: #ffffff"
+                            class="selected"
+                            aria-label="本文の背景色：白"
+                            aria-pressed="true"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-text-color="#e5eada"
+                            style="--swatch: #e5eada"
+                            aria-label="本文の背景色：セージ"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-text-color="#e3eaf3"
+                            style="--swatch: #e3eaf3"
+                            aria-label="本文の背景色：ブルー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-heading-text-color="#f2dfe1"
+                            style="--swatch: #f2dfe1"
+                            aria-label="本文の背景色：ピンク"
+                            aria-pressed="false"
+                          ></button
+                          ><input
+                            id="titleTextBgColor"
+                            type="color"
+                            value="#ffffff"
+                            aria-label="本文の背景色を自由に選択"
+                          />
+                        </div>
+                      </fieldset>
+                    </div>
+                  </details>
+                </div>
+              </details>
+            </div>
+          </details>
+          <details class="settings-group">
+            <summary>画像単体</summary>
+            <div class="group-body">
+              <details class="setting-item">
+                <summary>タイトル</summary>
+                <div class="setting-content">
+                  <label class="toggle-row"
+                    ><span>タイトルをつける</span
+                    ><input id="tileTitleEnabled" type="checkbox" checked
+                  /></label>
+                  <div id="tileTitleControls">
+                    <details class="setting-item">
+                      <summary>文字色</summary>
+                      <div class="setting-content">
+                        <div class="colors">
+                          <button
+                            type="button"
+                            data-tile-title-color="#f4efe7"
+                            style="--swatch: #f4efe7"
+                            aria-label="タイトル文字色：アイボリー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-title-color="#ffffff"
+                            style="--swatch: #ffffff"
+                            aria-label="タイトル文字色：白"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-title-color="#e5eada"
+                            style="--swatch: #e5eada"
+                            aria-label="タイトル文字色：セージ"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-title-color="#e3eaf3"
+                            style="--swatch: #e3eaf3"
+                            aria-label="タイトル文字色：ブルー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-title-color="#f2dfe1"
+                            style="--swatch: #f2dfe1"
+                            aria-label="タイトル文字色：ピンク"
+                            aria-pressed="false"
+                          ></button
+                          ><input
+                            id="tileTitleColor"
+                            type="color"
+                            value="#29372f"
+                            aria-label="タイトル文字色を自由に選択"
+                          />
+                        </div>
+                      </div>
+                    </details>
+                    <details class="setting-item">
+                      <summary>位置</summary>
+                      <div class="setting-content">
+                        <label class="field"
+                          >タイトルの位置<select id="tileTitlePosition">
+                            <option value="top">画像の上</option>
+                            <option value="bottom" selected>画像の下</option>
+                          </select></label
+                        >
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </details>
+              <details class="setting-item">
+                <summary>背景</summary>
+                <div class="setting-content">
+                  <label class="toggle-row"
+                    ><span>背景をつける</span
+                    ><input id="tileBgEnabled" type="checkbox"
+                  /></label>
+                  <div id="tileBackgroundControls" hidden>
+                    <details class="setting-item">
+                      <summary>背景色</summary>
+                      <div class="setting-content">
+                        <div class="colors">
+                          <button
+                            type="button"
+                            data-tile-color="#f4efe7"
+                            style="--swatch: #f4efe7"
+                            aria-label="画像単体の背景色：アイボリー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-color="#ffffff"
+                            style="--swatch: #ffffff"
+                            class="selected"
+                            aria-label="画像単体の背景色：白"
+                            aria-pressed="true"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-color="#e5eada"
+                            style="--swatch: #e5eada"
+                            aria-label="画像単体の背景色：セージ"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-color="#e3eaf3"
+                            style="--swatch: #e3eaf3"
+                            aria-label="画像単体の背景色：ブルー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-color="#f2dfe1"
+                            style="--swatch: #f2dfe1"
+                            aria-label="画像単体の背景色：ピンク"
+                            aria-pressed="false"
+                          ></button
+                          ><input
+                            id="tileBgColor"
+                            type="color"
+                            value="#ffffff"
+                            aria-label="画像単体の背景色を自由に選択"
+                          />
+                        </div>
+                      </div>
+                    </details>
+                    <details class="setting-item">
+                      <summary>枠線の種類</summary>
+                      <div class="setting-content">
+                        <label class="field"
+                          >枠線の種類<select id="tileBorderStyle">
+                            <option value="none">なし</option>
+                            <option value="solid" selected>実線</option>
+                            <option value="dashed">破線</option>
+                            <option value="dotted">点線</option>
+                            <option value="double">二重線</option>
+                          </select></label
+                        >
+                      </div>
+                    </details>
+                    <details class="setting-item">
+                      <summary>枠線の色</summary>
+                      <div class="setting-content">
+                        <div class="colors">
+                          <button
+                            type="button"
+                            data-tile-border-color="#f4efe7"
+                            style="--swatch: #f4efe7"
+                            aria-label="枠線の色：アイボリー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-border-color="#ffffff"
+                            style="--swatch: #ffffff"
+                            class="selected"
+                            aria-label="枠線の色：白"
+                            aria-pressed="true"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-border-color="#e5eada"
+                            style="--swatch: #e5eada"
+                            aria-label="枠線の色：セージ"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-border-color="#e3eaf3"
+                            style="--swatch: #e3eaf3"
+                            aria-label="枠線の色：ブルー"
+                            aria-pressed="false"
+                          ></button
+                          ><button
+                            type="button"
+                            data-tile-border-color="#f2dfe1"
+                            style="--swatch: #f2dfe1"
+                            aria-label="枠線の色：ピンク"
+                            aria-pressed="false"
+                          ></button
+                          ><input
+                            id="tileBorderColor"
+                            type="color"
+                            value="#ffffff"
+                            aria-label="枠線の色を自由に選択"
+                          />
+                        </div>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </details>
+              <details class="setting-item">
+                <summary>透過率</summary>
+                <div class="setting-content">
+                  <label class="range-field"
+                    >透過率 <output id="imageTransparencyValue">0%</output
+                    ><input
+                      id="imageTransparency"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="0"
+                    /><span
+                      >各写真に一括適用・0%：不透明 ／ 100%：透明</span
+                    ></label
+                  >
+                </div>
+              </details>
+              <input id="border" type="checkbox" checked hidden /><input
+                id="frameTransparency"
+                type="hidden"
+                value="15"
+              /><output id="frameTransparencyValue" hidden></output>
+            </div>
+          </details>
+        </aside>
+        <div id="rightPane" class="right-pane">
+          <section class="usage-guide" aria-labelledby="usageTitle">
+            <h3 id="usageTitle">使い方</h3>
+            <ol>
+              <li>
+                画像全体・見出し・添付画像の見た目は、設定項目で調整します。スマホでは右上のメニューから設定を開けます。
+              </li>
+              <li>
+                プレビュー画面の背景をクリック（タップ）すると、背景画像をアップロード・設定できます。
+              </li>
+              <li>
+                添付画像のアップロード後、表示される候補からレイアウトを選べます。1・4・9・16枚は自動配置です。
+              </li>
+              <li>
+                画像をドラッグして別の画像に重ねると、位置を入れ替えられます。
+              </li>
+              <li>
+                画像をクリック（タップ）すると削除の確認画面が開き、「削除する」で削除できます。
+              </li>
+              <li>
+                「プレビュー」を押すと、ダウンロード前に完成画像を確認できます。
+              </li>
+              <li>
+                「PNGをダウンロード」「JPEGをダウンロード」で画像を保存できます。
+              </li>
+            </ol>
+          </section>
+          <article id="previewDrop" class="preview-area">
+            <div class="preview-top">
+              <h2 class="preview-heading">プレビュー</h2>
+              <span id="layoutLabel"></span>
+            </div>
+            <input id="files" type="file" accept="image/*" multiple hidden />
+            <div id="notice" role="alert"></div>
+            <span
+              id="orderStatus"
+              class="visually-hidden"
+              role="status"
+              aria-live="polite"
+            ></span>
+            <div id="previewStage">
+              <nav id="previewSettingsRail" aria-label="画像の設定">
+                <div class="preview-setting-shortcut overall-shortcut">
+                  <button
+                    id="overallSettingsButton"
+                    type="button"
+                    aria-label="画像全体の設定を開く"
+                  >
+                    ＋</button
+                  ><span>画像全体設定</span>
+                </div>
+                <div class="preview-setting-shortcut">
+                  <button
+                    id="headingSettingsButton"
+                    type="button"
+                    aria-label="見出しの設定を開く"
+                  >
+                    ＋</button
+                  ><span>見出し設定</span>
+                </div>
+                <div class="preview-setting-shortcut">
+                  <button
+                    id="photoSettingsButton"
+                    type="button"
+                    aria-label="画像単体の設定を開く"
+                  >
+                    ＋</button
+                  ><span>画像単体設定</span>
+                </div>
+                <div class="preview-setting-shortcut add-image-shortcut">
+                  <button
+                    id="mobileAddImageButton"
+                    type="button"
+                    aria-label="画像を追加する"
+                  >
+                    ＋</button
+                  ><span>画像追加</span>
+                </div>
+              </nav>
+              <div id="square">
+                <div id="backgroundLayer" aria-hidden="true"></div>
+                <div id="canvasTitle">
+                  <span id="titleMeasure" aria-hidden="true"></span>
+                  <div
+                    id="headingImageControls"
+                    class="heading-image-controls"
+                    hidden
+                  >
+                    <button
+                      id="headingImageDrop"
+                      type="button"
+                      aria-label="見出し画像を追加または変更"
+                    >
+                      <img id="titleIcon" alt="見出しの画像" hidden /><span
+                        id="titleImagePlaceholder"
+                        >＋</span
+                      ></button
+                    ><button
+                      id="titleImageRemove"
+                      class="heading-image-remove"
+                      type="button"
+                      aria-label="見出し画像を削除"
+                      hidden
+                    >
+                      ×</button
+                    ><input
+                      id="titleImageFile"
+                      type="file"
+                      accept="image/*"
+                      hidden
+                    />
+                  </div>
+                  <span
+                    id="titleText"
+                    contenteditable="plaintext-only"
+                    role="textbox"
+                    aria-label="全体の見出し"
+                    data-placeholder="全体の見出しを入力"
+                  ></span
+                  ><input id="title" type="hidden" value="" />
+                </div>
+                <div id="photoArea">
+                  <div
+                    id="empty"
+                    role="button"
+                    tabindex="0"
+                    aria-label="画像を選択"
+                  >
+                    <div class="empty-grid"><i></i><i></i><i></i><i></i></div>
+                    <h3>ここに画像をドロップ</h3>
+                    <p>
+                      クリック（タップ）して画像を選択できます。<br />追加した画像は自動でレイアウトされます。
+                    </p>
+                  </div>
+                  <div id="grid" hidden></div>
+                </div>
+              </div>
+            </div>
+            <div id="photoActions" class="canvas-actions" hidden>
+              <button id="photoDropPrompt" type="button" hidden>
+                ここに画像をドロップ・クリックして選択
+              </button>
+            </div>
+            <div id="layoutChoices" hidden>
+              <span class="layout-choice-label">レイアウトを選択</span>
+              <div id="layoutChoiceButtons"></div>
+            </div>
+            <div class="preview-bottom">
+              <div class="download-buttons">
+                <button id="outputPreviewButton" type="button" disabled>
+                  プレビュー</button
+                ><button id="downloadPng" disabled>↓ PNGをダウンロード</button
+                ><button id="downloadJpeg" disabled>
+                  ↓ JPEGをダウンロード
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+    <footer id="appCopyright">
+      <nav class="footer-info-links" aria-label="サイト情報">
+        <button type="button" data-info="privacy">プライバシーポリシー</button
+        ><button type="button" data-info="terms">利用規約</button
+        ><button type="button" data-info="version">バージョン情報</button>
+      </nav>
+      <div>©Roll Eight Works</div>
+    </footer>
+    <dialog
+      id="deleteDialog"
+      aria-labelledby="deleteTitle"
+      aria-describedby="deleteName"
+    >
+      <h2 id="deleteTitle">この画像を削除しますか？</h2>
+      <img id="deletePreview" alt="削除対象の画像" />
+      <p id="deleteName"></p>
+      <div class="dialog-buttons">
+        <button id="deleteCancel" type="button" autofocus>キャンセル</button
+        ><button id="deleteConfirm" type="button">削除する</button>
+      </div>
+    </dialog>
+    <dialog id="cropDialog" aria-labelledby="cropTitle">
+      <h2 id="cropTitle">背景画像を設定する</h2>
+      <p id="cropEmpty">背景画像を選択してください。</p>
+      <button id="cropUpload" class="background-upload-zone" type="button">
+        <span class="background-upload-icon" aria-hidden="true">＋</span
+        ><strong>ここに背景画像をドロップ</strong
+        ><span>クリック（タップ）して画像を選択できます。</span>
+      </button>
+      <p id="cropUploadNotice" role="status"></p>
+      <div id="cropEditor" hidden>
+        <p>画像をドラッグして位置を調整できます。</p>
+        <canvas
+          id="cropCanvas"
+          tabindex="0"
+          role="img"
+          aria-label="切り抜きプレビュー。ドラッグまたは矢印キーで位置を調整"
+        ></canvas
+        ><label class="range-field"
+          >拡大率 <output id="cropZoomValue">100%</output
+          ><input
+            id="cropZoom"
+            type="range"
+            min="1"
+            max="4"
+            step="0.01"
+            value="1" /></label
+        ><button id="cropReset" type="button">位置と拡大率をリセット</button>
+      </div>
+      <div class="dialog-buttons">
+        <button id="backgroundDeleteButton" type="button" hidden>
+          背景画像を削除する</button
+        ><button id="cropCancel" type="button">キャンセル</button
+        ><button id="cropApply" type="button" disabled>
+          背景画像を設定する
+        </button>
+      </div>
+    </dialog>
+    <dialog id="outputPreviewDialog" aria-labelledby="outputPreviewTitle">
+      <h2 id="outputPreviewTitle">作成画像のプレビュー</h2>
+      <p id="outputPreviewSize"></p>
+      <div class="output-preview-image-area">
+        <img id="outputPreviewImage" alt="実際に保存される画像のプレビュー" />
+      </div>
+      <p id="outputPreviewNotice" role="status"></p>
+      <div class="output-preview-footer">
+        <button id="outputPreviewPng" type="button">PNGをダウンロード</button
+        ><button id="outputPreviewJpeg" type="button">JPEGをダウンロード</button
+        ><button id="outputPreviewClose" type="button">閉じる</button>
+      </div>
+    </dialog>
+    <dialog id="mobileMenuDialog" aria-labelledby="mobileMenuTitle">
+      <div class="mobile-menu-header">
+        <h2 id="mobileMenuTitle">メニュー</h2>
+        <button
+          id="mobileMenuClose"
+          type="button"
+          aria-label="メニューを閉じる"
+        >
+          ×
+        </button>
+      </div>
+      <nav class="mobile-menu-nav" aria-label="メニュー内の移動">
+        <button id="mobileUsageLink" type="button">使い方</button
+        ><button type="button" data-info="privacy">プライバシーポリシー</button
+        ><button type="button" data-info="terms">利用規約</button
+        ><button type="button" data-info="version">バージョン情報</button>
+      </nav>
+      <button id="mobileMenuBack" type="button" hidden>← メニューに戻る</button>
+      <div id="mobileMenuContent" hidden></div>
+    </dialog>
+    <dialog id="mobileSettingsDialog" aria-labelledby="mobileSettingsTitle">
+      <div class="mobile-menu-header">
+        <h2 id="mobileSettingsTitle">画像設定</h2>
+        <button
+          id="mobileSettingsClose"
+          type="button"
+          aria-label="画像設定を閉じる"
+        >
+          ×
+        </button>
+      </div>
+      <div id="mobileSettingsContent"></div>
+      <div class="settings-modal-footer">
+        <button id="mobileSettingsOk" type="button">OK</button>
+      </div>
+    </dialog>
+    <dialog id="backgroundDeleteDialog" aria-labelledby="backgroundDeleteTitle">
+      <h2 id="backgroundDeleteTitle">背景画像を削除します。よろしいですか？</h2>
+      <div class="dialog-buttons">
+        <button id="backgroundDeleteCancel" type="button" autofocus>
+          キャンセル</button
+        ><button id="backgroundDeleteConfirm" type="button">削除する</button>
+      </div>
+    </dialog>
+    <dialog id="siteInfoDialog" aria-labelledby="siteInfoTitle">
+      <div class="mobile-menu-header">
+        <h2 id="siteInfoTitle"></h2>
+        <button id="siteInfoClose" type="button" aria-label="閉じる">×</button>
+      </div>
+      <div id="siteInfoBody">
+        <div id="versionInfo" hidden>
+          <p>ver.0.1</p>
+          <p>©Roll Eight Works</p>
+        </div>
+        <div id="legalInfo" hidden>
+          <p class="legal-frame-note">
+            外部ページを表示しています。表示されない場合は<a
+              id="legalExternalLink"
+              target="_blank"
+              rel="noopener noreferrer"
+              >別タブで開く</a
+            >をご利用ください。
+          </p>
+          <iframe
+            id="legalFrame"
+            title="外部ページ"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </div>
+      <div class="settings-modal-footer">
+        <button id="siteInfoOk" type="button">OK</button>
+      </div>
+    </dialog>
+    <script src="js/script.js"></script>
+  </body>
+</html>
